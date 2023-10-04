@@ -33,11 +33,23 @@ head(ENSEMBL_id)
 
 rownames(subsetted_raw) = ENSEMBL_id
 
-seurat_object <- CreateSeuratObject(counts = subsetted_raw, 
+#grep("", rownames(subsetted_raw))
+rows_to_remove <- which(is.na(rownames(subsetted_raw)) | rownames(subsetted_raw) == "")
+
+# Remove rows with empty or NA row names
+cleaned_raw <- subsetted_raw[-rows_to_remove, ]
+
+print(dim(cleaned_raw))
+
+
+
+seurat_object <- CreateSeuratObject(counts = cleaned_raw, 
                                     project = "NSCLC",
                                     min.cells = 1, min.features = 1)
 
 # 17745 features across 77030 samples within 1 assay 
+
+seurat_object$n_counts = seurat_object$nCount_RNA
 
 
 SaveH5Seurat(seurat_object, filename = "NSCLC_subsetted_raw.h5Seurat",overwrite = TRUE)
