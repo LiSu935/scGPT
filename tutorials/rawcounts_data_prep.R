@@ -51,6 +51,16 @@ seurat_object <- CreateSeuratObject(counts = cleaned_raw,
 
 seurat_object$n_counts = seurat_object$nCount_RNA
 
+meta_df=seurat_object[[]]
+meta_df$cellid = rownames(meta_df)
+
+label_df_tem = read.csv('GSE179994_Tcell.metadata.tsv', header = TRUE,sep='\t')[,c("cellid","cluster")]
+colnames(label_df_tem) = c("cellid" ,"cell_type")
+
+library(dplyr)
+
+meta_df_tem = left_join(meta_df, label_df_tem, by='cellid')
+seurat_object$cell_type = meta_df_tem$cell_type
 
 SaveH5Seurat(seurat_object, filename = "NSCLC_subsetted_raw.h5Seurat",overwrite = TRUE)
 Convert("NSCLC_subsetted_raw.h5Seurat", dest = "h5ad", overwrite = TRUE)
