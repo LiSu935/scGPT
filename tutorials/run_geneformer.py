@@ -19,20 +19,28 @@ tk.tokenize_data("/mnt/pixstor/dbllab/suli/Alg_development/use_scgpt/",
 
 from geneformer import EmbExtractor
 # initiate EmbExtractor
-embex = EmbExtractor(model_type="CellClassifier",
-                     num_classes=3,
-                     filter_data={"cell_type":["Cardiomyocyte1","Cardiomyocyte2","Cardiomyocyte3"]},
+embex = EmbExtractor(model_type="Pretrained",
+                     num_classes=0,
+                     emb_mode="cell",
+                     filter_data=None,
                      max_ncells=None,
-                     emb_layer=0,
-                     emb_label=["disease","cell_type"],
-                     labels_to_plot=["disease"],
+                     emb_layer=-1,
+                     emb_label=None,#["cell_type"],
+                     labels_to_plot=["cell_type"],
                      forward_batch_size=200,
-                     nproc=16)
+                     nproc=2)
 
 # extracts embedding from input data
 # example dataset: https://huggingface.co/datasets/ctheodoris/Genecorpus-30M/tree/main/example_input_files/cell_classification/disease_classification/human_dcm_hcm_nf.dataset
-embs = embex.extract_embs("../fine_tuned_models/geneformer-6L-30M_CellClassifier_cardiomyopathies_220224",
-                          "path/to/input_data/",
-                          "path/to/output_directory/",
-                          "output_prefix")
+embs = embex.extract_embs("../geneformer-12L-30M",
+                          "/mnt/pixstor/dbllab/suli/Alg_development/use_scgpt/NSCLC_subsetted.dataset/",
+                          "/mnt/pixstor/dbllab/suli/Alg_development/use_scgpt/",
+                          "NSCLC_subsetted_geneformer_out")
 
+
+#File "/mnt/pixstor/data/lsxgf/miniconda/envs/py-geneformer/lib/python3.8/site-packages/huggingface_hub/utils/_validators.py", line 164, in validate_repo_id
+#    raise HFValidationError(
+#huggingface_hub.utils._validators.HFValidationError: Repo id must use alphanumeric chars or '-', '_', '.', '--' and '..' are forbidden, '-' and '.' cannot start or end the name, max length is 96: '../geneformer-12L-30M'.
+
+
+# what pretrained model to use? model_type?
