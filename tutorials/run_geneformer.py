@@ -26,15 +26,15 @@ embex = EmbExtractor(model_type="Pretrained",
                      max_ncells=None,
                      emb_layer=-1,
                      emb_label=None,#["cell_type"],
-                     labels_to_plot=["cell_type"],
+                     labels_to_plot=None, #["cell_type"],
                      forward_batch_size=200,
-                     nproc=2)
+                     nproc=15)
 
 # extracts embedding from input data
 # example dataset: https://huggingface.co/datasets/ctheodoris/Genecorpus-30M/tree/main/example_input_files/cell_classification/disease_classification/human_dcm_hcm_nf.dataset
-embs = embex.extract_embs("../geneformer-12L-30M",
-                          "/mnt/pixstor/dbllab/suli/Alg_development/use_scgpt/NSCLC_subsetted.dataset/",
-                          "/mnt/pixstor/dbllab/suli/Alg_development/use_scgpt/",
+embs = embex.extract_embs("/mnt/pixstor/dbllab/suli/tools_related/geneformer/geneformer-12L-30M",
+                          "/mnt/pixstor/dbllab/suli/Alg_development/use_geneformer/data/NSCLC_subsetted/NSCLC_subsetted.dataset/",
+                          "/mnt/pixstor/dbllab/suli/Alg_development/use_geneformer/data/NSCLC_subsetted/",
                           "NSCLC_subsetted_geneformer_out")
 
 
