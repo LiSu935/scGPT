@@ -44,3 +44,4 @@ embs = embex.extract_embs("/mnt/pixstor/dbllab/suli/tools_related/geneformer/gen
 
 
 # what pretrained model to use? model_type?
+# Feel necessary to check the size of "only_embs_df.index" https://huggingface.co/ctheodoris/Geneformer/blob/main/geneformer/emb_extractor.py line 149
